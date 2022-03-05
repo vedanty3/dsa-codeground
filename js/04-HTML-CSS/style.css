@@ -1,0 +1,50 @@
+* {
+  /* margin: 0;
+  padding: 0; */
+  box-sizing: border-box;
+}
+body {
+  background-color: yellow;
+  font-family: cursive;
+  /* padding: 15px; */
+}
+
+h1 {
+  font-size: 20px;
+  color: red;
+  margin-bottom: 20px;
+}
+#your-name {
+  color: black;
+  padding: 0%;
+  font-size: small;
+  border: 3px solid black;
+  margin-top: 40px;
+  padding: 5px 10px;
+  height: 150px;
+  width: 300px;
+  height: 150px;
+  background-color: yellowgreen;
+}
+a {
+  text-decoration: none;
+  font-style: italic;
+  font-size: small;
+}
+.box {
+  font-family: cursive;
+  font-style: italic;
+  color: black;
+  margin-bottom: 20px;
+}
+
+footer {
+  margin-top: 240px;
+}
+
+img {
+  margin-top: 3%;
+  margin-left: 1%;
+  justify-content: center;
+  width: 250px;
+}

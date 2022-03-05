@@ -1,0 +1,97 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+using namespace std;
+
+class TreeNode
+{
+public:
+    int data;
+    vector<TreeNode *> children;
+    TreeNode(int data)
+    {
+        this->data = data;
+    }
+};
+
+TreeNode *takeInputLevelWise()
+{
+    int rootData;
+    cout << "Enter root data : ";
+    cin >> rootData;
+    TreeNode *root = new TreeNode(rootData);
+    queue<TreeNode *> q;
+    q.push(root);
+
+    while (!q.empty())
+    {
+        TreeNode *f = q.front();
+        q.pop();
+        int n;
+        cout << "Enter the number of children of " << f->data << " : ";
+        cin >> n;
+        for (int i = 1; i <= n; i++)
+        {
+            int childData;
+            cout << "Enter " << i << "th child of " << f->data << " : ";
+            cin >> childData;
+            TreeNode *child = new TreeNode(childData);
+            q.push(child);
+            f->children.push_back(child);
+        }
+    }
+    return root;
+}
+
+void printTreeLevelWise(TreeNode *root)
+{
+    queue<TreeNode *> q;
+    q.push(root);
+
+    while (!q.empty())
+    {
+        TreeNode *f = q.front();
+        q.pop();
+        cout << f->data << " : ";
+        for (int i = 0; i < f->children.size(); i++)
+        {
+            cout << f->children[i]->data << ", ";
+        }
+        cout << endl;
+        for (int i = 0; i < f->children.size(); i++)
+        {
+            q.push(f->children[i]);
+        }
+    }
+}
+
+int countLeafNode(TreeNode *root)
+{
+    if (root == NULL)
+    {
+        return 0;
+    }
+    if (root->children.size() == 0)
+    {
+        return 1;
+    }
+    int count = 0;
+    for (int i = 0; i < root->children.size(); i++)
+    {
+        count += countLeafNode(root->children[i]);
+    }
+    return count;
+}
+// INPUT
+// 1 3 2 3 4 2 5 6 1 7 1 8 0 0 0 0
+int main()
+{
+    TreeNode *root = takeInputLevelWise();
+    cout << "Tree is : " << endl;
+    printTreeLevelWise(root);
+    cout << endl;
+    cout << "Number of leaf nodes of tree : ";
+    cout << countLeafNode(root);
+    cout << endl;
+    return 0;
+}
