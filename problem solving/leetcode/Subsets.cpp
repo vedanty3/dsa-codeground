@@ -3,26 +3,29 @@
 class Solution
 {
 public:
-    void helper(vector<int> &nums, vector<vector<int>> &result, vector<int> &temp, int i)
+    void solve(vector<vector<int>> &ans, vector<int> &tmp, vector<int> &nums, int idx, int n)
     {
-        if (i == nums.size())
+        if (idx == n)
         {
-            result.push_back(temp);
+            ans.push_back(tmp);
             return;
         }
 
-        temp.push_back(nums[i]);
-        helper(nums, result, temp, i + 1);
-        temp.pop_back();
-        helper(nums, result, temp, i + 1);
+        tmp.push_back(nums[idx]);
+        solve(ans, tmp, nums, idx + 1, n);
+        tmp.pop_back();
+        solve(ans, tmp, nums, idx + 1, n);
     }
 
     vector<vector<int>> subsets(vector<int> &nums)
     {
-        vector<vector<int>> result;
-        vector<int> temp;
-        int n = 0;
-        helper(nums, result, temp, 0);
-        return result;
+
+        int n = nums.size();
+        vector<vector<int>> ans;
+        vector<int> tmp;
+
+        solve(ans, tmp, nums, 0, n);
+
+        return ans;
     }
 };
