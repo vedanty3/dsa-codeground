@@ -15,6 +15,9 @@
     "list": "cpp",
     "initializer_list": "cpp",
     "regex": "cpp",
-    "valarray": "cpp"
+    "valarray": "cpp",
+    "chrono": "cpp",
+    "random": "cpp",
+    "limits": "cpp"
   }
 }
