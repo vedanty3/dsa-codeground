@@ -320,6 +320,98 @@ arr.sort((a, b) => {
 // arr.sort((a, b) => a - b);
 console.log(arr);
 
+
+// Ways to fill and create an array
+
+console.log([1, 2, 3, 4, 5]);
+console.log(new Array(1, 2, 3, 4, 5));
+
+const x = new Array(7);
+console.log(x);
+x.fill(3);
+x.fill(3, 2, 4);
+console.log(x);
+
+const arr = [1, 2, 3, 4, 5];
+arr.fill(23, 3, 5);
+console.log(arr);
+
+const y = Array.from({ length: 7 }, () => 4);
+console.log(y);
+
+const z = Array.from({ length: 7 }, (_, i) => {
+  return i + 1;
+});
+
+console.log(z);
+
+
+labelBalance.addEventListener("click", function () {
+  const movementsUI = Array.from(
+    document.querySelectorAll(".movements__value"),
+    (el) => Number(el.textContent.replace("€", ""))
+  );
+  console.log(movementsUI);
+  const movementsUI2 = [...document.querySelectorAll(".movements__value")];
+});
+
+// Array Methods Practice
+
+// 1.
+const bankDepositSum = accounts
+  .flatMap((acc) => acc.movements)
+  .filter((mov) => mov > 0)
+  .reduce((sum, curr) => sum + curr);
+
+console.log(bankDepositSum);
+
+// 2.
+// const numDeposits1000 = accounts
+//   .flatMap((acc) => acc.movements)
+//   .filter((mov) => mov >= 1000).length;
+const numDeposits1000 = accounts
+  .flatMap((acc) => acc.movements)
+  .reduce((cnt, cur) => (cur >= 1000 ? ++cnt : cnt), 0);
+
+console.log(numDeposits1000);
+
+// 3.
+const { deposits, withdrawals } = accounts
+  .flatMap((acc) => acc.movements)
+  .reduce(
+    (sums, cur) => {
+      // cur > 0 ? (sums.deposits += cur) : (sums.withdrawals += cur);
+      sums[cur > 0 ? "deposits" : "withdrawals"] += cur;
+
+      return sums;
+    },
+    { deposits: 0, withdrawals: 0 }
+  );
+
+console.log(`Deposits:`, deposits, `\nWithdrawals:`, withdrawals);
+
+// 4.
+
+const convert = function (title) {
+  const exceptions = ["a", "an", "the", "but", "or", "on", "in", "with", "and"];
+
+  const capitalize = (str) => str[0].toUpperCase() + str.slice(1);
+
+  const titleCase = title
+    .toLowerCase()
+    .split(" ")
+    .map((word) => (exceptions.includes(word) ? word : capitalize(word)))
+    .join(" ");
+
+  return capitalize(titleCase);
+};
+
+const str = "and this is a nice title";
+console.log(convert(str));
+
+
+
+
 */
 
 //-----------------------------------------------------------------------------------------------
