@@ -1,38 +1,58 @@
 #include<iostream>
 using namespace std;
-
-class complex
+class student
 {
+    /// As soon as a constructor is created by the user default constructor is no longer available to us...
 private:
-    int real;
-    int img;
-
+    int age;
+    int rollno;
 public:
-    complex(int real,int img)
+    student()                    /// A default constructor has no arguements, no return type and has name same as class name...
     {
-        this->real=real;
-        this->img=img;
+        cout<<"Default constructor has been created."<<endl;
+
     }
 
-    complex operator+(complex &o2)
+
+    student(int rollno)
     {
-        this->real=real+o2.real;
-        this->img=img+o2.img;
-        complex fnew(real,img);
-        return fnew;
+        cout<<"A parameterized constructor has been called. "<<endl;
+        this->rollno=rollno;                                        /// this keyword should be used when property name and parameter name is same.
+
     }
 
-    void print(void)
+    student(int r,int agee)
     {
-        cout<<real<<" + "<<img<<"i";
+        cout<<"Parameterized constructor with two arguements."<<endl;
+        rollno=r;
+        age=agee;
+
     }
+
+
+
+    void display(void)
+    {
+        cout<<"The age of student is :"<<age<<endl;
+        cout<<"The roll number of student is :"<<rollno<<endl;
+
+
+    }
+
 
 };
 
+
 int main()
 {
-    complex o1(2,3);
-    complex o2(1,1);
-    complex o3=o1+o2;
-    o3.print();
+    student s1;                         /// " student s1; " it is interpreted as " s1.student(); "...
+    s1.display();
+    student s2(22);
+    s2.display();                       /// student *s2=new student(22);  s2->display();
+    student *s3=new student(23);
+    (*s3).display();
+    student s4(33,16);
+    s4.display();
+
+
 }
