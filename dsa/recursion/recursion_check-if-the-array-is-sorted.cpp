@@ -1,84 +1,25 @@
-#include <bits/stdc++.h>
+#include <iostream>
 using namespace std;
 
-/*first way*/
-bool isSorted(int array[], int n)
+bool isSorted(int arr[], int n)
 {
-    if (n == 0 || n == 1)
-    {
+    if (n == 0 or n == 1)
         return true;
-    }
-    else if (array[0] > array[1])
-    {
+
+    if (arr[n - 2] > arr[n - 1])
         return false;
-    }
 
-    // bool isSmallerSorted = isSorted(array + 1, n - 1);
-
-    // if (isSmallerSorted)
-    // {
-    //     return true;
-    // }
-    // else
-    // {
-    //     return false;
-    // }
-
-    return isSorted(array + 1, n - 1);
+    isSorted(arr, n - 1);
 }
-
-/* second way
-bool isSorted(int array[], int n)
-{
-    if (n == 0 || n == 1)
-    {
-        return true;
-    }
-
-    bool isSmallerSorted = isSorted(array + 1, n - 1);
-    if (!isSmallerSorted)
-    {
-        return false;
-    }
-    else if (array[0] > array[1])
-    {
-        return false;
-    }
-
-    else
-    {
-        return true;
-    }
-}
-*/
-
-/*  third way 
-bool isSorted(int array[], int n)
-{
-    if (n == 0 || n == 1)
-    {
-        return true;
-    }
-    if (array[n - 2] > array[n - 1])
-    {
-        return false;
-    }
-
-    return isSorted(array, n - 1);
-}
-*/
 
 int main()
 {
-    int array[5] = {1, 3, 8, 5, 6};
-    if (isSorted(array, 5))
-    {
-        cout << "sorted" << endl;
-    }
+    int arr[] = {1, 2, 4, 6, 7};
+
+    if (isSorted(arr, 5))
+        cout << "array is sorted";
     else
-    {
-        cout << " not sorted" << endl;
-    }
+        cout << "array is unsorted";
 
     return 0;
 }
