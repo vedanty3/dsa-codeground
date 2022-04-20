@@ -1,4 +1,6 @@
 // Check if a string is a palindrome.
+// TC: O(N/2)
+// SC: O(N/2)
 
 #include <bits/stdc++.h>
 using namespace std;
