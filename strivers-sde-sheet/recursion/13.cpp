@@ -9,11 +9,12 @@ void subsetSum(int arr[], vector<int> &ds, int idx, int k, int n)
     {
         if (k == 0)
         {
+            cout << "[";
             for (auto i : ds)
             {
-                cout << i << " ";
+                cout << i << ", ";
             }
-            cout << endl;
+            cout << "]" << endl;
         }
 
         return;
