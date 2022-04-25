@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
-int main()
 
+int main()
 {
   int array[100][100];
   int m, n;
