@@ -81,7 +81,7 @@ Node *takeInput2()
 int main()
 {
     // Node *head = takeInput();
-    Node *head = takeInput2();
+    Node *head = takeInput();
     print(head);
 
     return 0;
