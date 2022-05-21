@@ -2,7 +2,7 @@
 using namespace std;
 
 
-int printarray(int array[][4],int m,int n)                      /// passing the value of column is mandatory but row is not...
+int printarray(int array[][4],int m,int n) /// passing the value of column is mandatory but row is not...
 {
 
 for(int i=0;i<m;i++)
