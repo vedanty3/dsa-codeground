@@ -1,6 +1,6 @@
-/*
+// https : // leetcode.com/problems/binary-tree-level-order-traversal/
 
- * https : // leetcode.com/problems/binary-tree-level-order-traversal/
+/**
  * Definition for a binary tree node.
  * struct TreeNode {
  *     int val;
@@ -10,52 +10,49 @@
  *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
-
  */
 class Solution
 {
 public:
     vector<vector<int>> levelOrder(TreeNode *root)
     {
-        vector<vector<int>> v;
+
+        vector<vector<int>> ans;
+
         if (root == NULL)
         {
-            return v;
+            return ans;
         }
-        vector<int> temp;
+
         queue<TreeNode *> q;
         q.push(root);
-        q.push(NULL);
 
         while (!q.empty())
         {
-            TreeNode *f = q.front();
-            q.pop();
+            int size = q.size();
+            vector<int> level;
 
-            if (f == NULL)
+            for (int i = 0; i < size; i++)
             {
-                v.push_back(temp);
-                temp.clear();
-                if (!q.empty())
+                TreeNode *n = q.front();
+                q.pop();
+
+                if (n->left != NULL)
                 {
-                    q.push(NULL);
+                    q.push(n->left);
                 }
+
+                if (n->right)
+                {
+                    q.push(n->right);
+                }
+
+                level.push_back(n->val);
             }
 
-            else
-            {
-                temp.push_back(f->val);
-                if (f->left != NULL)
-                {
-                    q.push(f->left);
-                }
-
-                if (f->right != NULL)
-                {
-                    q.push(f->right);
-                }
-            }
+            ans.push_back(level);
         }
-        return v;
+
+        return ans;
     }
 };
