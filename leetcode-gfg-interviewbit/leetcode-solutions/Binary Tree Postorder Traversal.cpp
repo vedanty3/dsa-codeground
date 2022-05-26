@@ -34,7 +34,7 @@ public:
     }
 };
 
-/** Iterative
+/** Iterative - 2 Stacks
  * Definition for a binary tree node.
  * struct TreeNode {
  *     int val;
@@ -82,6 +82,56 @@ public:
         {
             ds.push_back(st2.top()->val);
             st2.pop();
+        }
+
+        return ds;
+    }
+};
+
+// Single Stack
+class Solution
+{
+public:
+    vector<int> postorderTraversal(TreeNode *root)
+    {
+        vector<int> ds;
+
+        if (root == NULL)
+        {
+            return ds;
+        }
+
+        stack<TreeNode *> st;
+
+        while (root != NULL or !st.empty())
+        {
+            if (root != NULL)
+            {
+                st.push(root);
+                root = root->left;
+            }
+            else
+            {
+                TreeNode *n = st.top()->right;
+
+                if (n == NULL)
+                {
+                    n = st.top();
+                    st.pop();
+                    ds.push_back(n->val);
+
+                    while (!st.empty() and st.top()->right == n)
+                    {
+                        n = st.top();
+                        st.pop();
+                        ds.push_back(n->val);
+                    }
+                }
+                else
+                {
+                    root = n;
+                }
+            }
         }
 
         return ds;
