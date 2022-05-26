@@ -6,18 +6,34 @@ public:
     int lastStoneWeight(vector<int> &stones)
     {
 
-        priority_queue<int> pq(stones.begin(), stones.end());
+        priority_queue<int> pq;
 
-        while (pq.size() > 1)
+        for (auto i : stones)
         {
-            int x = pq.top();
-            pq.pop();
-            int y = pq.top();
-            pq.pop();
-
-            pq.push(abs(y - x));
+            pq.push(i);
         }
 
-        return pq.top();
+        while (true)
+        {
+            if (pq.empty())
+            {
+                return 0;
+            }
+
+            if (pq.size() == 1)
+            {
+                return pq.top();
+            }
+
+            int f = pq.top();
+            pq.pop();
+            int s = pq.top();
+            pq.pop();
+
+            if (f != s)
+            {
+                pq.push(f - s);
+            }
+        }
     }
 };
