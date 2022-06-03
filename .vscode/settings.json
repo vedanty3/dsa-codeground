@@ -2,6 +2,10 @@
   "files.associations": {
     "vector": "cpp",
     "new": "cpp",
-    "iostream": "cpp"
+    "iostream": "cpp",
+    "chrono": "cpp",
+    "random": "cpp",
+    "limits": "cpp",
+    "valarray": "cpp"
   }
 }
