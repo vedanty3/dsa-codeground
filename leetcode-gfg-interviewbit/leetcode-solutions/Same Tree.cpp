@@ -1,6 +1,5 @@
-// https : // leetcode.com/problems/same-tree/
-
-/**
+/*
+ * https://leetcode.com/problems/same-tree/
  * Definition for a binary tree node.
  * struct TreeNode {
  *     int val;
@@ -16,24 +15,12 @@ class Solution
 public:
     bool isSameTree(TreeNode *p, TreeNode *q)
     {
-        if (p == NULL and q == NULL)
+
+        if (p == NULL or q == NULL)
         {
-            return true;
-        }
-        if (p != NULL and q == NULL)
-        {
-            return false;
-        }
-        if (p == NULL and q != NULL)
-        {
-            return false;
+            return p == q;
         }
 
-        if (p->val != q->val)
-        {
-            return false;
-        }
-
-        return (isSameTree(p->left, q->left) and isSameTree(p->right, q->right));
+        return p->val == q->val and isSameTree(p->left, q->left) and isSameTree(p->right, q->right);
     }
 };
