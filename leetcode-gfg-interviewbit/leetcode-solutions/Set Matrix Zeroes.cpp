@@ -6,7 +6,7 @@ public:
     void setZeroes(vector<vector<int>> &matrix)
     {
 
-        vector<pair<int, int>> ds;
+        vector<pair<int, int>> indices;
 
         for (int i = 0; i < matrix.size(); i++)
         {
@@ -14,12 +14,12 @@ public:
             {
                 if (matrix[i][j] == 0)
                 {
-                    ds.push_back(make_pair(i, j));
+                    indices.push_back(make_pair(i, j));
                 }
             }
         }
 
-        for (auto it : ds)
+        for (auto it : indices)
         {
             int m = it.first;
             int n = it.second;
