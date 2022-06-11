@@ -1,35 +1,16 @@
-/*
- * https://leetcode.com/problems/all-nodes-distance-k-in-binary-tree/
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
- * };
- */
+// https : // practice.geeksforgeeks.org/problems/nodes-at-given-distance-in-binary-tree/1#
 
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
- * };
- */
 class Solution
 {
-
 private:
-    void mark_parents(TreeNode *root, unordered_map<TreeNode *, TreeNode *> &m)
+    void mark_parents(Node *root, unordered_map<Node *, Node *> &m)
     {
-        queue<TreeNode *> q;
+        queue<Node *> q;
         q.push(root);
 
         while (!q.empty())
         {
-            TreeNode *node = q.front();
+            Node *node = q.front();
             q.pop();
 
             if (node->left != NULL)
@@ -47,13 +28,44 @@ private:
     }
 
 public:
-    vector<int> distanceK(TreeNode *root, TreeNode *target, int k)
+    Node *lvlOrderTraversal(Node *root, int target)
     {
-        unordered_map<TreeNode *, TreeNode *> m;
+        queue<Node *> q;
+        q.push(root);
+
+        while (!q.empty())
+        {
+            Node *n = q.front();
+            q.pop();
+
+            if (n->data == target)
+            {
+                return n;
+            }
+
+            if (n->left != NULL)
+            {
+                q.push(n->left);
+            }
+
+            if (n->right != NULL)
+            {
+                q.push(n->right);
+            }
+        }
+
+        return NULL;
+    }
+
+    vector<int> KDistanceNodes(Node *root, int t, int k)
+    {
+        Node *target = lvlOrderTraversal(root, t);
+
+        unordered_map<Node *, Node *> m;
         mark_parents(root, m);
 
-        unordered_map<TreeNode *, bool> visited;
-        queue<TreeNode *> q;
+        unordered_map<Node *, bool> visited;
+        queue<Node *> q;
         q.push(target);
         visited[target] = true;
 
@@ -72,7 +84,7 @@ public:
 
             for (int i = 0; i < size; i++)
             {
-                TreeNode *current = q.front();
+                Node *current = q.front();
                 q.pop();
 
                 if (current->left != NULL and !visited[current->left])
@@ -99,9 +111,11 @@ public:
 
         while (!q.empty())
         {
-            ans.push_back(q.front()->val);
+            ans.push_back(q.front()->data);
             q.pop();
         }
+
+        sort(ans.begin(), ans.end());
 
         return ans;
     }

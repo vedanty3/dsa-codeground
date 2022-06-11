@@ -5,38 +5,40 @@ class Solution
 public:
     vector<vector<int>> threeSum(vector<int> &nums)
     {
-        vector<vector<int>> result;
-        set<vector<int>> s;
-        sort(nums.begin(), nums.end());
         int n = nums.size();
+        sort(nums.begin(), nums.end());
+
+        vector<vector<int>> res;
+
         for (int i = 0; i < n - 2; i++)
         {
-            int j = i + 1;
-            int k = n - 1;
-
-            int val = nums[i];
-
-            while (j < k)
+            if (i == 0 or (i > 0 and nums[i] != nums[i - 1]))
             {
-                if (val + nums[j] + nums[k] == 0)
+                int l = i + 1, h = n - 1, sum = -nums[i];
+
+                while (h > l)
                 {
-                    s.insert({val, nums[j++], nums[k--]});
-                }
-                else if ((val + nums[j] + nums[k]) < 0)
-                {
-                    j++;
-                }
-                else
-                {
-                    k--;
+                    int add = nums[l] + nums[h];
+
+                    if (sum == add)
+                    {
+                        res.push_back({nums[i], nums[l], nums[h]});
+
+                        while (h > l and (nums[l + 1] == nums[l]))
+                            l++;
+                        while (h > l and (nums[h - 1] == nums[h]))
+                            h--;
+
+                        l++;
+                        h--;
+                    }
+                    else if (sum > add)
+                        l++;
+                    else
+                        h--;
                 }
             }
         }
-
-        for (auto i : s)
-        {
-            result.push_back(i);
-        }
-        return result;
+        return res;
     }
 };
