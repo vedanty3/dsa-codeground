@@ -84,4 +84,73 @@ http
 // import installed colors module.
 const colors = require("colors");
 console.log("Hello, I'm Vedant Yetekar.".red);
+
+// installed nodemon globally
+// nodemon saves time by making our app run continuously.// once you make changes and save code the output will be reflected.
+
+console.log("hello world");
+console.log("hi, I'm Vedant Yetekar.");
+
+// NodeJs is single threaded and asynchronous.
+// it will execute scripts one after other.
+
+// Make a basic API
+const http = require("http");
+const data = require("./data");
+
+http
+.createServer((req, res) => {
+  res.writeHead(200, { "Content-Type": "application/json" });
+  res.write(JSON.stringify(data));
+  
+  res.end();
+})
+.listen(3000);
+
+
+// Getting input from command line, creating and deleting file with input.
+
+// console.log(process.argv[3]);
+
+const fs = require("fs");
+
+const input = process.argv;
+fs.writeFileSync(input[2], input[3]);
+
+
+// Adding and removing files.
+
+const fs = require("fs");
+const input = process.argv;
+
+if (input[2] == "add") {
+  fs.writeFileSync(input[3], input[4]);
+} else if (input[2] == "remove") {
+  fs.unlinkSync(input[3]);
+} else {
+  console.log("invalid input");
+}
+
+// Creating files in a folder.
+
+const fs = require("fs");
+const path = require("path");
+const dirPath = path.join(__dirname, "files");
+
+for (let i = 1; i < 5; i++) {
+  fs.writeFileSync(dirPath + `/file${i}.txt`, `This is file ${i}.`);
+  // fs.unlinkSync(dirPath + `/file${i}.txt`);
+}
+
+
+// Reading files.
+
+const fs = require("fs");
+
+fs.readdir(__dirname + "/files", (error, files) => {
+  files.forEach((file) => {
+    console.log(file);
+  });
+});
+
 */
