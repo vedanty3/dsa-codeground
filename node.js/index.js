@@ -153,4 +153,32 @@ fs.readdir(__dirname + "/files", (error, files) => {
   });
 });
 
+
+//-------------------------------------------------------------------------------------------------------------------
+//----------------------------------------------- CRUD WITH FILE SYSTEM----------------------------------------------
+
+// 1. CREATE A FILE
+const fs = require("fs");
+const path = require("path");
+const dirPath = path.join(__dirname, "crud");
+const filePath = `${dirPath}/CRUD.txt`;
+
+fs.writeFileSync(filePath, "File created using fs module.");
+
+// 2. READ A FILE
+fs.readFile(filePath, "utf-8", (error, file) => {
+  console.log(file);
+});
+
+// 3. UPDATE A FILE
+fs.appendFile(filePath, "\nPerforming CRUD operations.", (error) => {});
+
+// 4. RENAME A FILE
+fs.rename(filePath, `${dirPath}/CRUD.txt`, (error) => {});
+
+// 5. DELETE A FILE
+fs.unlinkSync(`${dirPath}/CRUD.txt`);
+
+//-------------------------------------------------------------------------------------------------------------------
+
 */
