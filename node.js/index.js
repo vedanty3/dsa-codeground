@@ -153,8 +153,8 @@ fs.readdir(__dirname + "/files", (error, files) => {
   });
 });
 
-
 //-------------------------------------------------------------------------------------------------------------------
+
 //----------------------------------------------- CRUD WITH FILE SYSTEM----------------------------------------------
 
 // 1. CREATE A FILE
@@ -178,6 +178,72 @@ fs.rename(filePath, `${dirPath}/CRUD.txt`, (error) => {});
 
 // 5. DELETE A FILE
 fs.unlinkSync(`${dirPath}/CRUD.txt`);
+
+//-------------------------------------------------------------------------------------------------------------------
+
+//---------------------------------------NODEJS AND JAVASCRIPT: ASYNCHRONOUS ???-------------------------------------
+
+// JavaScript and NodeJs are asynchronous, they do not wait for one task to finish. Once the script is executed it moves to another task which becomes the reason for NodeJs and JavaScript being faster.
+
+// EXAMPLE: 
+
+console.log("I'M FIRST...");
+
+setTimeout(() => {
+  console.log("I'M SECOND...");
+}, 1000);
+
+console.log("I'M THIRD...");
+
+// DRAWBACK: In the example show below we're updating the value of b but still the result of log is 10. This issue can be handled using promises.
+
+let a = 10;
+let b = 0;
+
+setTimeout(() => {
+  b = 20;
+}, 1000);
+
+console.log(a + b);
+
+// OVERCOMING THE DRAWBACK:
+
+let a = 10;
+let b = 0;
+
+const waitingForB = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve(20);
+  }, 5000);
+});
+
+waitingForB.then((b) => {
+  console.log(a + b);
+});
+
+// Some functions are already promises e.g. fetch().
+
+//-------------------------------------------------------------------------------------------------------------------
+
+//------------------------------------------------HOW NODEJS WORKS??-------------------------------------------------
+
+// 1. CALL STACK
+// 2. NODE API
+// 3. CALLBACK QUEUE
+
+// EXAMPLE:
+
+console.log("STARTING UP!");
+
+setTimeout(() => {
+  console.log("TWO SECONDS!");
+}, 2000);
+
+setTimeout(() => {
+  console.log("ZERO SECONDS!");
+}, 0);
+
+console.log("FINISHING UP!");
 
 //-------------------------------------------------------------------------------------------------------------------
 
