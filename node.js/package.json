@@ -18,6 +18,7 @@
   "homepage": "https://github.com/vedantyetekar7/code_ground/tree/main#readme",
   "dependencies": {
     "colors": "^1.4.0",
+    "ejs": "^3.1.8",
     "express": "^4.18.1"
   }
 }

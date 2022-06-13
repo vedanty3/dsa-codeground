@@ -308,4 +308,29 @@ app.get("*", (req, res) => {
 
 app.listen(3000);
 
+// Template Engine (ejs)
 */
+
+const express = require("express");
+const app = express();
+
+app.set("view engine", "ejs");
+
+app.get("/profile", (req, res) => {
+  const user = {
+    name: "Vedant Yetekar",
+    email: "ursvedantyetekar@gmail.com",
+    city: "Pune",
+    state: "Maharashtra",
+    country: "India",
+    skills: ["ReactJs", "NodeJs", "JavaScript", "C++"],
+  };
+
+  res.render("profile", { user });
+});
+
+app.get("/login", (req, res) => {
+  res.render("login");
+});
+
+app.listen(3000);

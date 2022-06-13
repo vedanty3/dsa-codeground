@@ -1,5 +1,4 @@
 /*
-
  * https://leetcode.com/problems/count-complete-tree-nodes/
  * Definition for a binary tree node.
  * struct TreeNode {
@@ -15,6 +14,32 @@
 class Solution
 {
 public:
+    int leftHeight(TreeNode *root)
+    {
+        int hgt = 0;
+
+        while (root != NULL)
+        {
+            root = root->left;
+            hgt++;
+        }
+
+        return hgt;
+    }
+
+    int rightHeight(TreeNode *root)
+    {
+        int hgt = 0;
+
+        while (root != NULL)
+        {
+            root = root->right;
+            hgt++;
+        }
+
+        return hgt;
+    }
+
     int countNodes(TreeNode *root)
     {
 
@@ -23,6 +48,14 @@ public:
             return 0;
         }
 
-        return countNodes(root->left) + countNodes(root->right) + 1;
+        int lh = leftHeight(root);
+        int rh = rightHeight(root);
+
+        if (lh == rh)
+        {
+            return pow(2, lh) - 1;
+        }
+
+        return 1 + countNodes(root->left) + countNodes(root->right);
     }
 };
