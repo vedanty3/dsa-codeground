@@ -6,27 +6,27 @@ public:
     int majorityElement(vector<int> &nums)
     {
 
-        int major_element = nums[0];
-        int cnt = 1;
-        int n = nums.size();
+        int cnt = 0;
+        int element = 0;
 
-        for (int i = 1; i < n; i++)
+        for (auto num : nums)
         {
-            if (nums[i] == major_element)
+            if (cnt == 0)
+            {
+                element = num;
+            }
+
+            if (num == element)
             {
                 cnt++;
             }
+
             else
             {
                 cnt--;
-                if (cnt == 0)
-                {
-                    major_element = nums[i];
-                    cnt = 1;
-                }
             }
         }
 
-        return major_element;
+        return element;
     }
 };

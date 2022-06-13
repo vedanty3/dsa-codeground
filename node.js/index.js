@@ -247,4 +247,65 @@ console.log("FINISHING UP!");
 
 //-------------------------------------------------------------------------------------------------------------------
 
+//------------------------------------------EXPRESSJS: A NodeJS Framework--------------------------------------------
+
+// Creating a webpage with routes using express.js.
+// Rendering HTML and JSON data on a page.
+
+const express = require("express");
+const app = express();
+
+app.get("", (req, res) => {
+  res.send(
+    `
+    <h2>${req.query.name ? "Hello, " + req.query.name : "HOMEPAGE"}</h2>
+    <a href="/about">Go to about</a>
+    `
+    );
+});
+
+app.get("/about", (req, res) => {
+  res.send(`
+  <input type="text" placeholder="Username" value=${
+    req.query.name ? req.query.name : "Username"
+  }/>
+  <button>Submit</button>
+  <a href="/">Go to home</a>
+  `);
+});
+
+app.get("/help", (req, res) => {
+  res.send([
+    { name: "Vedant Yetekar", email: "ursvedantyetekar@gmail.com" },
+    { name: "Sam D'souza", email: "sam@test.com" },
+  ]);
+});
+
+app.listen(3000);
+
+// Rendering HTML Pages.
+
+const express = require("express");
+const path = require("path");
+
+const app = express();
+const publicPath = path.join(__dirname, "public");
+
+// Using below method won't hide file extension.
+// app.use(express.static(publicPath));
+
+app.get("", (req, res) => {
+  res.sendFile(`${publicPath}/index.html`);
+});
+
+app.get("/about", (req, res) => {
+  res.sendFile(`${publicPath}/about.html`);
+});
+
+app.get("*", (req, res) => {
+  res.sendFile(`${publicPath}/error.html`);
+});
+
+app.listen(3000);
+
 */
