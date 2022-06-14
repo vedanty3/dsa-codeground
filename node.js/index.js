@@ -309,7 +309,6 @@ app.get("*", (req, res) => {
 app.listen(3000);
 
 // Template Engine (ejs)
-*/
 
 const express = require("express");
 const app = express();
@@ -334,3 +333,104 @@ app.get("/login", (req, res) => {
 });
 
 app.listen(3000);
+
+
+//---------------------------------------------------MIDDLEWARE------------------------------------------------------
+
+// Application Level Middleware: can be applied on all routes present in the application.
+
+// Middlewares are used in order to filter requests, e.g. like filter users age and deciding on the basis of his age weather he/she can access the site.
+
+const express = require("express");
+const app = express();
+
+const reqFilter = (req, res, next) => {
+  if (!req.query.age) {
+    res.send("Please Provide You Age!");
+  } else if (req.query.age < 18) {
+    res.send("You cannot access this content!");
+  } else {
+    next();
+  }
+};
+
+app.use(reqFilter);
+
+app.get("/", (req, res) => {
+  res.send("LEARNING ABOUT MIDDLEWARES.");
+});
+
+app.get("/about", (req, res) => {
+  res.send(
+    "Middlewares are used in order to filter requests, e.g. like filter users age and deciding on the basis of his age weather he/she can access the site."
+    );
+});
+
+app.listen(4000);
+
+
+// Route Level Middleware: Applying middleware on specific routes.
+
+const express = require("express");
+const app = express();
+
+const reqFilter = (req, res, next) => {
+  if (!req.query.age) {
+    res.send("Please Provide You Age!");
+  } else if (req.query.age < 18) {
+    res.send("You Cann't This Content!");
+  } else {
+    next();
+  }
+};
+
+app.get("/", (req, res) => {
+  res.send("HOMEPAGE");
+});
+
+app.get("/about", reqFilter, (req, res) => {
+  res.send("ABOUTPAGE");
+});
+
+app.listen(5000);
+
+// Putting Middleware in Separate File.
+
+const express = require("express");
+const app = express();
+
+const reqFilter = require("./middleware");
+
+app.get("/", (req, res) => {
+  res.send("HOMEPAGE");
+});
+
+app.get("/about", reqFilter, (req, res) => {
+  res.send("ABOUTPAGE");
+});
+
+app.listen(5000);
+
+
+// Applying middleware on a group of routes use `Router` instance of express, e.g. `const route = express.Router()`
+
+const express = require("express");
+const app = express();
+const route = express.Router();
+
+const reqFilter = require("./middleware");
+route.use(reqFilter);
+
+app.get("/", (req, res) => {
+  res.send("HOMEPAGE");
+});
+
+route.get("/about", (req, res) => {
+  res.send("ABOUTPAGE");
+});
+
+app.use("/", route);
+
+app.listen(5000);
+
+*/
