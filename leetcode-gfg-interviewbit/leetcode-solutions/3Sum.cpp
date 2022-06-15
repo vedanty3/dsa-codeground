@@ -6,39 +6,51 @@ public:
     vector<vector<int>> threeSum(vector<int> &nums)
     {
         int n = nums.size();
-        sort(nums.begin(), nums.end());
+        vector<vector<int>> ans;
 
-        vector<vector<int>> res;
+        sort(nums.begin(), nums.end());
 
         for (int i = 0; i < n - 2; i++)
         {
             if (i == 0 or (i > 0 and nums[i] != nums[i - 1]))
             {
-                int l = i + 1, h = n - 1, sum = -nums[i];
+                int low = i + 1;
+                int high = n - 1;
+                int sum = 0 - nums[i];
 
-                while (h > l)
+                while (low < high)
                 {
-                    int add = nums[l] + nums[h];
+                    int add = nums[low] + nums[high];
 
                     if (sum == add)
                     {
-                        res.push_back({nums[i], nums[l], nums[h]});
+                        ans.push_back({nums[i], nums[low], nums[high]});
 
-                        while (h > l and (nums[l + 1] == nums[l]))
-                            l++;
-                        while (h > l and (nums[h - 1] == nums[h]))
-                            h--;
+                        while (low < high and nums[low] == nums[low + 1])
+                        {
+                            low++;
+                        }
 
-                        l++;
-                        h--;
+                        while (low < high and nums[high] == nums[high - 1])
+                        {
+                            high--;
+                        }
+
+                        low++;
+                        high--;
                     }
                     else if (sum > add)
-                        l++;
+                    {
+                        low++;
+                    }
                     else
-                        h--;
+                    {
+                        high--;
+                    }
                 }
             }
         }
-        return res;
+
+        return ans;
     }
 };
