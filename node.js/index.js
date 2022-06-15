@@ -454,30 +454,32 @@ getData();
 
 // Creating a separate file for MongoDB.
 
+//---------> READING DATA.
+
 // 1. One way using promise.
 
 const dbConnect = require("./mongodb");
 
 dbConnect().then((response) => {
   response
-    .find()
-    .toArray()
-    .then((data) => {
-      console.log(data);
-    });
+  .find()
+  .toArray()
+  .then((data) => {
+    console.log(data);
   });
-  
-  // 2. Using Async Await.
+});
+
+// 2. Using Async Await.
 
 const dbConnect = require("./mongodb");
-
-const waitForDBToConnect = async () => {
-  let response = await dbConnect();
-  let data = await response.find().toArray();
   
-  console.log(data);
-};
-
-waitForDBToConnect();
-
-*/
+  const waitForDBToConnect = async () => {
+    let response = await dbConnect();
+    let data = await response.find().toArray();
+    
+    console.log(data);
+  };
+  
+  waitForDBToConnect();
+  
+  */
