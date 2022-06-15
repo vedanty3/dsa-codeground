@@ -433,4 +433,51 @@ app.use("/", route);
 
 app.listen(5000);
 
+//-----------------------------------------------------MongoDB-------------------------------------------------------
+
+// Connect MongoDB with NodeJs.
+
+const { MongoClient } = require("mongodb");
+const url = "mongodb://localhost:27017";
+const dataBase = "employee-db";
+const client = new MongoClient(url);
+
+const getData = async () => {
+  let result = await client.connect();
+  let db = result.db(dataBase);
+  let collection = db.collection("employee-details");
+  let response = await collection.find({}).toArray();
+  console.log(response);
+};
+
+getData();
+
+// Creating a separate file for MongoDB.
+
+// 1. One way using promise.
+
+const dbConnect = require("./mongodb");
+
+dbConnect().then((response) => {
+  response
+    .find()
+    .toArray()
+    .then((data) => {
+      console.log(data);
+    });
+  });
+  
+  // 2. Using Async Await.
+
+const dbConnect = require("./mongodb");
+
+const waitForDBToConnect = async () => {
+  let response = await dbConnect();
+  let data = await response.find().toArray();
+  
+  console.log(data);
+};
+
+waitForDBToConnect();
+
 */
