@@ -86,7 +86,8 @@ const colors = require("colors");
 console.log("Hello, I'm Vedant Yetekar.".red);
 
 // installed nodemon globally
-// nodemon saves time by making our app run continuously.// once you make changes and save code the output will be reflected.
+// nodemon saves time by making our app run continuously.
+// once you make changes and save code the output will be reflected.
 
 console.log("hello world");
 console.log("hi, I'm Vedant Yetekar.");
@@ -322,7 +323,7 @@ app.get("/profile", (req, res) => {
     city: "Pune",
     state: "Maharashtra",
     country: "India",
-    skills: ["ReactJs", "NodeJs", "JavaScript", "C++"],
+    skills: ["ReactJs", "NodeJs", "JavaScript", "MongoDB","C++"],
   };
 
   res.render("profile", { user });
@@ -481,5 +482,32 @@ const dbConnect = require("./mongodb");
   };
   
   waitForDBToConnect();
+//----------------------------------------------Make API Using MongoDB-----------------------------------------------
   
-  */
+const express = require("express");
+const app = express();
+const dbConnect = require("./mongodb");
+
+// GET API Method: used whenever we want to read data through an api.
+
+app.get("/", async (req, res) => {
+  // you cann't pass body inside get api method.
+  let data = await dbConnect();
+  data = await data.find({}).toArray();
+  res.send(data);
+});
+
+// POST API Method: used whenever we want to send data through an api.
+
+app.use(express.json());
+
+app.post("/", async (req, res) => {
+  let data = await dbConnect();
+  let result = await data.insertOne(req.body);
+  res.send(result);
+  console.log(req.body);
+});
+
+app.listen(5000);
+
+*/
