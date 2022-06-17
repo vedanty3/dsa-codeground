@@ -7,8 +7,6 @@ let a = 20;
 let b = 30;
 console.warn(a + b);
 
-
-
 const arr = new Array();
 
 arr.push(10);
@@ -51,7 +49,6 @@ const binarySearch = (arr, val) => {
 
 console.log(binarySearch(arr, 500));
 
-
 // Global Modules: not needed to be imported.
 // e.g. console.log()
 // Non-Global Modules: are need to be imported.
@@ -75,11 +72,11 @@ fs("code.txt", "hello world");
 
 const http = require("http");
 http
-.createServer((req, res) => {
-  res.write("Hello, This is Vedant Yetekar");
-  res.end();
-})
-.listen(3000);
+  .createServer((req, res) => {
+    res.write("Hello, This is Vedant Yetekar");
+    res.end();
+  })
+  .listen(3000);
 
 // import installed colors module.
 const colors = require("colors");
@@ -100,14 +97,13 @@ const http = require("http");
 const data = require("./data");
 
 http
-.createServer((req, res) => {
-  res.writeHead(200, { "Content-Type": "application/json" });
-  res.write(JSON.stringify(data));
-  
-  res.end();
-})
-.listen(3000);
+  .createServer((req, res) => {
+    res.writeHead(200, { "Content-Type": "application/json" });
+    res.write(JSON.stringify(data));
 
+    res.end();
+  })
+  .listen(3000);
 
 // Getting input from command line, creating and deleting file with input.
 
@@ -117,7 +113,6 @@ const fs = require("fs");
 
 const input = process.argv;
 fs.writeFileSync(input[2], input[3]);
-
 
 // Adding and removing files.
 
@@ -142,7 +137,6 @@ for (let i = 1; i < 5; i++) {
   fs.writeFileSync(dirPath + `/file${i}.txt`, `This is file ${i}.`);
   // fs.unlinkSync(dirPath + `/file${i}.txt`);
 }
-
 
 // Reading files.
 
@@ -186,7 +180,7 @@ fs.unlinkSync(`${dirPath}/CRUD.txt`);
 
 // JavaScript and NodeJs are asynchronous, they do not wait for one task to finish. Once the script is executed it moves to another task which becomes the reason for NodeJs and JavaScript being faster.
 
-// EXAMPLE: 
+// EXAMPLE:
 
 console.log("I'M FIRST...");
 
@@ -262,7 +256,7 @@ app.get("", (req, res) => {
     <h2>${req.query.name ? "Hello, " + req.query.name : "HOMEPAGE"}</h2>
     <a href="/about">Go to about</a>
     `
-    );
+  );
 });
 
 app.get("/about", (req, res) => {
@@ -323,7 +317,7 @@ app.get("/profile", (req, res) => {
     city: "Pune",
     state: "Maharashtra",
     country: "India",
-    skills: ["ReactJs", "NodeJs", "JavaScript", "MongoDB","C++"],
+    skills: ["ReactJs", "NodeJs", "JavaScript", "MongoDB", "C++"],
   };
 
   res.render("profile", { user });
@@ -334,7 +328,6 @@ app.get("/login", (req, res) => {
 });
 
 app.listen(3000);
-
 
 //---------------------------------------------------MIDDLEWARE------------------------------------------------------
 
@@ -364,11 +357,10 @@ app.get("/", (req, res) => {
 app.get("/about", (req, res) => {
   res.send(
     "Middlewares are used in order to filter requests, e.g. like filter users age and deciding on the basis of his age weather he/she can access the site."
-    );
+  );
 });
 
 app.listen(4000);
-
 
 // Route Level Middleware: Applying middleware on specific routes.
 
@@ -411,7 +403,6 @@ app.get("/about", reqFilter, (req, res) => {
 });
 
 app.listen(5000);
-
 
 // Applying middleware on a group of routes use `Router` instance of express, e.g. `const route = express.Router()`
 
@@ -463,32 +454,32 @@ const dbConnect = require("./mongodb");
 
 dbConnect().then((response) => {
   response
-  .find()
-  .toArray()
-  .then((data) => {
-    console.log(data);
-  });
+    .find()
+    .toArray()
+    .then((data) => {
+      console.log(data);
+    });
 });
 
 // 2. Using Async Await.
 
 const dbConnect = require("./mongodb");
-  
-  const waitForDBToConnect = async () => {
-    let response = await dbConnect();
-    let data = await response.find().toArray();
-    
-    console.log(data);
-  };
-  
-  waitForDBToConnect();
+
+const waitForDBToConnect = async () => {
+  let response = await dbConnect();
+  let data = await response.find().toArray();
+
+  console.log(data);
+};
+
+waitForDBToConnect();
 //----------------------------------------------Make API Using MongoDB-----------------------------------------------
-  
+
+// GET API Method: used whenever we want to read data through an api.
+
 const express = require("express");
 const app = express();
 const dbConnect = require("./mongodb");
-
-// GET API Method: used whenever we want to read data through an api.
 
 app.get("/", async (req, res) => {
   // you cann't pass body inside get api method.
@@ -497,17 +488,77 @@ app.get("/", async (req, res) => {
   res.send(data);
 });
 
+app.listen(3000);
+
 // POST API Method: used whenever we want to send data through an api.
+
+const express = require("express");
+const app = express();
+const dbConnect = require("./mongodb");
 
 app.use(express.json());
 
 app.post("/", async (req, res) => {
   let data = await dbConnect();
-  let result = await data.insertOne(req.body);
+  let result = await data.insertOne(req.body); // insertMany() can also be used.
   res.send(result);
   console.log(req.body);
 });
 
-app.listen(5000);
+app.listen(3000);
+
+// PUT API Method: used whenever we want to update data through an api.
+
+const express = require("express");
+const app = express();
+const dbConnect = require("./mongodb");
+
+app.use(express.json());
+
+app.put("/:first_name", async (req, res) => {
+  const data = await dbConnect();
+  const result = await data.updateOne(
+    { first_name: req.params.first_name },
+    { $set: req.body }
+  );
+  console.log(result);
+});
+
+app.listen(3000);
+
+// DELETE API Method: used whenever we want to delete data through an api.
+
+const express = require("express");
+const app = express();
+const dbConnect = require("./mongodb");
+const mongodb = require("mongodb");
+
+app.delete("/:id", async (req, res) => {
+  const data = await dbConnect();
+  const result = await data.deleteOne({
+    _id: new mongodb.ObjectId(req.params.id),
+  });
+
+  res.send(result);
+});
+
+app.listen(3000);
+
+//---------------------------------------------------MONGOOSE--------------------------------------------------------
+
+const mongoose = require("mongoose");
+
+const main = async () => {
+  await mongoose.connect("mongodb://localhost:27017/employee-db");
+  const EmployeesSchema = new mongoose.Schema({ first_name: String });
+  const EmployeesModel = mongoose.model("employee-details", EmployeesSchema);
+
+  let data = new EmployeesModel({ first_name: "Joseph" });
+  let result = await data.save();
+
+  console.log(result);
+};
+
+main();
 
 */
