@@ -1,5 +1,4 @@
 /*
-
  * https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/
  * Definition for a binary tree node.
  * struct TreeNode {
@@ -10,49 +9,39 @@
  *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
-
  */
 class Solution
 {
 public:
-    TreeNode *helper(vector<int> preOrder, vector<int> inOrder, int inS, int inE, int preS, int preE)
+    TreeNode *helper(vector<int> &preorder, int preStart, int preEnd, vector<int> &inorder, int inStart, int inEnd, map<int, int> &inMap)
     {
-        if (inS > inE)
+        if (inStart > inEnd or preStart > preEnd)
         {
             return NULL;
         }
 
-        int rootData = preOrder[preS];
-        int rootIndex = -1;
+        TreeNode *root = new TreeNode(preorder[preStart]);
 
-        for (int i = inS; i <= inE; i++)
-        {
-            if (inOrder[i] == rootData)
-            {
-                rootIndex = i;
-                break;
-            }
-        }
+        int inRoot = inMap[root->val];
+        int numsLeft = inRoot - inStart;
 
-        int leftInS = inS;
-        int leftInE = rootIndex - 1;
-        int leftPreS = preS + 1;
-        int leftPreE = leftPreS + leftInE - leftInS;
+        root->left = helper(preorder, preStart + 1, preStart + numsLeft, inorder, inStart, inRoot - 1, inMap);
+        root->right = helper(preorder, preStart + numsLeft + 1, preEnd, inorder, inRoot + 1, inEnd, inMap);
 
-        int rightInS = rootIndex + 1;
-        int rightInE = inE;
-        int rightPreS = leftPreE + 1;
-        int rightPreE = preE;
-
-        TreeNode *root = new TreeNode(rootData);
-        root->left = helper(preOrder, inOrder, leftInS, leftInE, leftPreS, leftPreE);
-        root->right = helper(preOrder, inOrder, rightInS, rightInE, rightPreS, rightPreE);
         return root;
     }
 
     TreeNode *buildTree(vector<int> &preorder, vector<int> &inorder)
     {
-        int n = inorder.size();
-        return helper(preorder, inorder, 0, n - 1, 0, n - 1);
+        map<int, int> inMap;
+
+        for (int i = 0; i < inorder.size(); i++)
+        {
+            inMap[inorder[i]] = i;
+        }
+
+        TreeNode *root = helper(preorder, 0, preorder.size() - 1, inorder, 0, inorder.size() - 1, inMap);
+
+        return root;
     }
 };
