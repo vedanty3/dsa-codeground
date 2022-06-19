@@ -646,4 +646,49 @@ app.post("/create", async (req, res) => {
 
 app.listen(3000);
 
+// GET API Method: used when we want to read data through an API.
+
+const express = require("express");
+const app = express();
+require("./config");
+const EmployeesModel = require("./employees");
+
+app.get("/read", async (req, res) => {
+  const data = await EmployeesModel.find();
+  res.send(data);
+  
+});
+
+app.listen(3000);
+
+// DELETE API Method: used when we want to delete data through an API.
+
+const express = require("express");
+const app = express();
+require("./config");
+const EmployeesModel = require("./employees");
+
+app.delete("/delete/:_id", async (req, res) => {
+  const data = await EmployeesModel.deleteOne(req.params);
+  res.send(data);
+});
+
+app.listen(3000);
+
+// PUT API Method: used when we want to update data through an API.
+
+const express = require("express");
+const app = express();
+require("./config");
+const EmployeesModel = require("./employees");
+
+app.use(express.json());
+
+app.put("/update/:_id", async (req, res) => {
+  const data = await EmployeesModel.updateOne(req.params, { $set: req.body });
+  res.send(data);
+});
+
+app.listen(3000);
+
 */
