@@ -6,33 +6,35 @@ class Solution
 public:
     int trap(vector<int> &height)
     {
+        int pre[height.size()];
+        int suff[height.size()];
 
-        int n = height.size();
-        if (n <= 2)
+        int mx = height[0];
+        pre[0] = mx;
+
+        for (int i = 1; i < height.size(); i++)
         {
-            return 0;
+            mx = max(mx, height[i]);
+            pre[i] = mx;
         }
 
-        vector<int> left(n, 0);
-        vector<int> right(n, 0);
+        mx = height[height.size() - 1];
+        suff[height.size() - 1] = mx;
 
-        left[0] = height[0];
-        right[n - 1] = height[n - 1];
-
-        for (int i = 1; i < n; i++)
+        for (int i = height.size() - 2; i >= 0; i--)
         {
-            left[i] = max(left[i - 1], height[i]);
-            right[n - i - 1] = max(right[n - i], height[n - i - 1]);
+            mx = max(mx, height[i]);
+            suff[i] = mx;
         }
 
-        int water = 0;
+        int sum = 0;
 
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i < height.size(); i++)
         {
-            water += (min(left[i], right[i]) - height[i]);
+            sum += min(pre[i], suff[i]) - height[i];
         }
 
-        return water;
+        return sum;
     }
 };
 
