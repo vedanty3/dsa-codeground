@@ -544,7 +544,7 @@ app.delete("/:id", async (req, res) => {
 
 app.listen(3000);
 
-//---------------------------------------------------MONGOOSE--------------------------------------------------------
+//-----------------------------------------------------MONGOOSE------------------------------------------------------------
 
 const mongoose = require("mongoose");
 
@@ -560,5 +560,90 @@ const main = async () => {
 };
 
 main();
+
+//---------------------------------------------------CRUD with Mongoose----------------------------------------------------
+
+const mongoose = require("mongoose");
+
+mongoose.connect("mongodb://localhost:27017/employee-db");
+
+const EmployeesSchema = new mongoose.Schema({
+  first_name: String,
+  last_name: String,
+  email: String,
+  gender: String,
+  company: String,
+});
+
+const saveInDB = async () => {
+  const EmployeesModel = await mongoose.model(
+    "employee-details",
+    EmployeesSchema
+  );
+  
+  const data = new EmployeesModel({
+    first_name: "Parth",
+    last_name: "Yetekar",
+    email: "parthyetekar@gmail.com",
+    gender: "Male",
+    company: "Media.net",
+  });
+  
+  const result = await data.save();
+  
+  console.log(result);
+};
+
+const updateInDB = async () => {
+  const EmployeesModel = await mongoose.model(
+    "employee-details",
+    EmployeesSchema
+    );
+    
+    const data = await EmployeesModel.updateOne(
+      { first_name: "Parth" },
+      { $set: { company: "Google" } }
+      );
+      
+      console.log(data);
+    };
+    
+    const deleteInDB = async () => {
+      const EmployeesModel = await mongoose.model(
+        "employee-details",
+    EmployeesSchema
+  );
+
+  const data = await EmployeesModel.deleteOne({ first_name: "Parth" });
+  
+  console.log(data);
+};
+
+const findInDB = async () => {
+  const EmployeesModel = mongoose.model("employee-details", EmployeesSchema);
+  
+  const data = await EmployeesModel.find({ first_name: "Wes" });
+  
+  console.log(data);
+};
+
+
+// POST API Method: used when we want to send data through an API.
+
+const express = require("express");
+const app = express();
+require("./config");
+const EmployeesModel = require("./employees");
+
+app.use(express.json());
+
+app.post("/create", async (req, res) => {
+  const data = new EmployeesModel(req.body);
+  const result = await data.save();
+
+  res.send(result);
+});
+
+app.listen(3000);
 
 */
