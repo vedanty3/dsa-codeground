@@ -627,7 +627,6 @@ const findInDB = async () => {
   console.log(data);
 };
 
-
 // POST API Method: used when we want to send data through an API.
 
 const express = require("express");
@@ -690,5 +689,73 @@ app.put("/update/:_id", async (req, res) => {
 });
 
 app.listen(3000);
+
+//-----------------------------------------------File Upload in NodeJs-----------------------------------------------------
+
+const express = require("express");
+const multer = require("multer");
+const app = express();
+
+const uploadFile = multer({
+  storage: multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, "uploads");
+    },
+    filename: (req, file, cb) => {
+      cb(null, file.fieldname + ".txt");
+    },
+  }),
+}).single("user_file");
+
+app.post("/upload", uploadFile, (req, res) => {
+  res.send("File Uploaded");
+});
+
+app.listen(5000);
+
+//----------------------------------------------------OS Module------------------------------------------------------------
+
+const os = require("os");
+
+console.log(os.arch());
+console.log(os.freemem() / (1024 * 1024 * 1024));
+console.log(os.totalmem() / (1024 * 1024 * 1024));
+console.log(os.hostname());
+console.log(os.platform());
+console.log(os.userInfo());
+
+//-----------------------------------------Events and Events Emitter in NodeJs---------------------------------------------
+
+const express = require("express");
+const app = express();
+const EventEmitter = require("events");
+
+const event = new EventEmitter();
+
+let cnt = 0;
+
+event.on("countApi", () => {
+  console.log("Event Called: ", cnt);
+});
+
+app.get("/", (req, res) => {
+  cnt++;
+  event.emit("countApi");
+  res.send("HOMEPAGE API CALLED!");
+});
+
+app.get("/search", (req, res) => {
+  cnt++;
+  event.emit("countApi");
+  res.send("SEARCH API CALLED!");
+});
+
+app.get("/store", (req, res) => {
+  cnt++;
+  event.emit("countApi");
+  res.send("STORE API CALLED!");
+});
+
+app.listen(5000);
 
 */
