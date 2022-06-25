@@ -15,29 +15,17 @@
 class Solution
 {
 public:
-    bool helper(TreeNode *root, long long minVal = -10000000000, long long maxVal = 10000000000)
+    bool helper(TreeNode *root, long min_val, long max_val)
     {
         if (root == NULL)
-        {
             return true;
-        }
-
-        bool left = helper(root->left, minVal, root->val);
-        bool right = helper(root->right, root->val, maxVal);
-
-        if (left && right && root->val > minVal && root->val < maxVal)
-        {
-            return true;
-        }
-        else
-        {
+        if (root->val <= min_val or root->val >= max_val)
             return false;
-        }
+        return helper(root->left, min_val, root->val) and helper(root->right, root->val, max_val);
     }
 
     bool isValidBST(TreeNode *root)
     {
-
-        return helper(root);
+        return helper(root, LONG_MIN, LONG_MAX);
     }
 };
