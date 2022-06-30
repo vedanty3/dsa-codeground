@@ -1,6 +1,5 @@
-// https : // leetcode.com/problems/recover-binary-search-tree/
-
-/**
+/*
+ * https://leetcode.com/problems/recover-binary-search-tree/
  * Definition for a binary tree node.
  * struct TreeNode {
  *     int val;
@@ -13,40 +12,47 @@
  */
 class Solution
 {
+
+private:
+    TreeNode *prev;
+    TreeNode *first;
+    TreeNode *middle;
+    TreeNode *last;
+
 public:
-    TreeNode *firstMistake;
-    TreeNode *secondMistake;
-    TreeNode *pre;
+    void helper(TreeNode *root)
+    {
+        if (!root)
+            return;
+
+        helper(root->left);
+
+        if (prev != NULL and prev->val > root->val)
+        {
+            if (!first)
+            {
+                first = prev;
+                middle = root;
+            }
+            else
+                last = root;
+        }
+
+        prev = root;
+
+        helper(root->right);
+    }
 
     void recoverTree(TreeNode *root)
     {
+        first = middle = last = NULL;
+        prev = new TreeNode(INT_MIN);
 
-        pre = new TreeNode(INT_MIN);
-        inorder(root);
-        swap(firstMistake->val, secondMistake->val);
-    }
+        helper(root);
 
-    void inorder(TreeNode *root)
-    {
-        if (root == NULL)
-        {
-            return;
-        }
-
-        inorder(root->left);
-
-        if (firstMistake == NULL and root->val < pre->val)
-        {
-            firstMistake = pre;
-        }
-
-        if (firstMistake != NULL and root->val < pre->val)
-        {
-            secondMistake = root;
-        }
-
-        pre = root;
-
-        inorder(root->right);
+        if (first and last)
+            swap(first->val, last->val);
+        else
+            swap(first->val, middle->val);
     }
 };
