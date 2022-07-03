@@ -23,7 +23,7 @@ int main()
     cout << vec.size() << "\n";
 
     vector<int> vec1(4, 0);                     // -> {0, 0, 0, 0}
-    vector<int> vec2(4, 0);                     // -> {10, 10, 10, 10}
+    vector<int> vec2(4, 10);                    // -> {10, 10, 10, 10}
     vector<int> vec3(vec2.begin(), vec2.end()); // -> {10, 10, 10, 10}
     vector<int> vec4(vec3);
 
