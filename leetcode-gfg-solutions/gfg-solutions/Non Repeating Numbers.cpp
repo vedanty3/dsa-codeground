@@ -1,9 +1,9 @@
-// https : // leetcode.com/problems/single-number-iii/
+// https : // practice.geeksforgeeks.org/problems/finding-the-numbers0215/1
 
 class Solution
 {
 public:
-    vector<int> singleNumber(vector<int> &nums)
+    vector<int> singleNumber(vector<int> nums)
     {
         int xorr = 0, set_bit = 0, xor1 = 0, xor2 = 0;
         for (auto num : nums)
@@ -24,6 +24,8 @@ public:
                 xor2 = xor2 ^ nums[i];
         }
 
+        if (xor1 > xor2)
+            return {xor2, xor1};
         return {xor1, xor2};
     }
 };
