@@ -1,4 +1,4 @@
-// https: // practice.geeksforgeeks.org/problems/detect-cycle-in-an-undirected-graph/1
+// https://practice.geeksforgeeks.org/problems/detect-cycle-in-an-undirected-graph/1
 
 // BFS
 
@@ -57,7 +57,7 @@ public:
             {
                 vis[it] = 1, dfs_cycle(it, node, vis, adj);
             }
-            else if (parent != it and vis[it])
+            else if (parent != it)
                 return true;
         }
 

@@ -62,5 +62,6 @@ int main()
     cout << cnt_set_bits(16) << endl;
     cout << __builtin_popcount(3) << endl;
     cout << __builtin_popcountll((1LL << 35) - 1) << endl;
+    cout << (0 ^ 0) << endl;
     return 0;
 }
