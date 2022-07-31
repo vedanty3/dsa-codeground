@@ -1,4 +1,4 @@
-// https : // leetcode.com/problems/n-queens/
+// https : // leetcode.com/problems/n-queens-ii/
 
 class Solution
 {
@@ -29,17 +29,17 @@ public:
         {
             if (board[row][col] == 'Q')
                 return false;
-            col--, row++;
+            row++, col--;
         }
 
         return true;
     }
 
-    void gen_boards(int col, int n, vector<string> &board, vector<vector<string>> &all_boards)
+    void cnt_all_boards(int col, int n, int &cnt, vector<string> &board)
     {
         if (col == n)
         {
-            all_boards.push_back(board);
+            cnt++;
             return;
         }
 
@@ -48,18 +48,18 @@ public:
             if (is_valid_board(row, col, n, board))
             {
                 board[row][col] = 'Q';
-                gen_boards(col + 1, n, board, all_boards);
+                cnt_all_boards(col + 1, n, cnt, board);
                 board[row][col] = '.';
             }
         }
     }
 
-    vector<vector<string>> solveNQueens(int n)
+    int totalNQueens(int n)
     {
         string s(n, '.');
+        int cnt = 0;
         vector<string> board(n, s);
-        vector<vector<string>> all_boards;
-        gen_boards(0, n, board, all_boards);
-        return all_boards;
+        cnt_all_boards(0, n, cnt, board);
+        return cnt;
     }
 };

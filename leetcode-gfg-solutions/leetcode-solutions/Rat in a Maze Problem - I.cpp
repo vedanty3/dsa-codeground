@@ -3,59 +3,26 @@
 class Solution
 {
 public:
-    void solve(int i, int j, vector<vector<int>> &m, vector<vector<int>> &vis, vector<string> &ds, string move, int n)
+    void get_all_paths(int row, int col, int n, string path, vector<vector<int>> &m, vector<string> &all_paths)
     {
-        if (i == n - 1 and j == n - 1)
-        {
-            ds.push_back(move);
+        if (row < 0 or row >= n or col < 0 or col >= n or m[row][col] == 0)
             return;
-        }
+        if (row == n - 1 and col == n - 1)
+            all_paths.push_back(path);
 
-        // Down
-        if (i + 1 < n and !vis[i + 1][j] and m[i + 1][j] == 1)
-        {
-            vis[i][j] = 1;
-            solve(i + 1, j, m, vis, ds, move + 'D', n);
-            vis[i][j] = 0;
-        }
-
-        // Left
-        if (j - 1 >= 0 and !vis[i][j - 1] and m[i][j - 1] == 1)
-        {
-            vis[i][j] = 1;
-            solve(i, j - 1, m, vis, ds, move + 'L', n);
-            vis[i][j] = 0;
-        }
-
-        // Right
-        if (j + 1 < n and !vis[i][j + 1] and m[i][j + 1] == 1)
-        {
-            vis[i][j] = 1;
-            solve(i, j + 1, m, vis, ds, move + 'R', n);
-            vis[i][j] = 0;
-        }
-
-        // Up
-        if (i - 1 >= 0 and !vis[i - 1][j] and m[i - 1][j] == 1)
-        {
-            vis[i][j] = 1;
-            solve(i - 1, j, m, vis, ds, move + 'U', n);
-            vis[i][j] = 0;
-        }
+        m[row][col] = 0;
+        get_all_paths(row + 1, col, n, path + "D", m, all_paths);
+        get_all_paths(row - 1, col, n, path + "U", m, all_paths);
+        get_all_paths(row, col + 1, n, path + "R", m, all_paths);
+        get_all_paths(row, col - 1, n, path + "L", m, all_paths);
+        m[row][col] = 1;
     }
 
     vector<string> findPath(vector<vector<int>> &m, int n)
     {
-
-        string move;
-        vector<string> ds;
-        vector<vector<int>> vis(n, vector<int>(n, 0));
-
-        if (m[0][0] == 1)
-        {
-            solve(0, 0, m, vis, ds, move, n);
-        }
-
-        return ds;
+        string path = "";
+        vector<string> all_paths;
+        get_all_paths(0, 0, n, path, m, all_paths);
+        return all_paths;
     }
 };
