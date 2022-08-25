@@ -46,3 +46,61 @@ public:
         return true;
     }
 };
+
+// Topological Sort
+class Solution
+{
+public:
+    void find_topo_sort(int node, vector<int> &vis, stack<int> &st, vector<int> adj[])
+    {
+        vis[node] = 1;
+
+        for (auto it : adj[node])
+        {
+            if (!vis[it])
+                find_topo_sort(it, vis, st, adj);
+        }
+
+        st.emplace(node);
+    }
+
+    bool canFinish(int numCourses, vector<vector<int>> &prerequisites)
+    {
+        vector<int> vis(numCourses + 1, 0);
+        vector<int> adj[numCourses];
+        stack<int> st;
+        unordered_map<int, int> mpp;
+        int idx = 0;
+
+        for (int i = 0; i < prerequisites.size(); i++)
+        {
+            if (prerequisites[i][0] == prerequisites[i][1])
+                return false;
+            adj[prerequisites[i][1]].emplace_back(prerequisites[i][0]);
+        }
+
+        for (int i = 0; i < numCourses; i++)
+        {
+            if (!vis[i])
+                find_topo_sort(i, vis, st, adj);
+        }
+
+        while (!st.empty())
+        {
+            mpp[st.top()] = idx;
+            st.pop();
+            idx++;
+        }
+
+        for (int i = 0; i < numCourses; i++)
+        {
+            for (auto it : adj[i])
+            {
+                if (mpp[i] > mpp[it])
+                    return false;
+            }
+        }
+
+        return true;
+    }
+};

@@ -12,7 +12,6 @@ public:
         {
             if (!vis[it])
             {
-                vis[it] = 1;
                 if (checkDFS(it, vis, dfs_vis, adj))
                     return true;
             }
