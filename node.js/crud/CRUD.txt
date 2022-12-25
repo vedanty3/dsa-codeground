@@ -1,2 +1,0 @@
-File created using fs module.
-Performing CRUD operations.
